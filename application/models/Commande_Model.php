@@ -285,7 +285,7 @@ class Commande_Model extends CI_MODEL
 
 		if( $filtre == "" )
 		{
-			$filtre = 'id_commande '.$ordre;
+			$filtre = 'id_commande desc';
 			if( $date_commande_1 == "" && $date_commande_2  == "" )
 			{
 				$sql = " select * from details_commande where id_user = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
@@ -399,7 +399,7 @@ class Commande_Model extends CI_MODEL
 
 		if( $filtre == "" )
 		{
-			$filtre = 'id_commande '.$ordre;
+			$filtre = 'id_commande desc';
 			$sql = " select * from details_commande where id_tarif = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 		}
 		elseif( $filtre != "" )
@@ -455,7 +455,7 @@ class Commande_Model extends CI_MODEL
 
 		if( $filtre == "" )
 		{
-			$filtre = 'id_commande desc '.$ordre;
+			$filtre = 'id_commande desc ';
 			if( $date_commande_1 == "" && $date_commande_2  == "" )
 			{
 				$sql = " select * from details_commande where modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	

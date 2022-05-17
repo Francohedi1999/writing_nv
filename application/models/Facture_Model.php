@@ -60,7 +60,7 @@ class Facture_Model extends CI_MODEL
 		$start = ( $page - 1 ) * 5; 
 		if( $filtre == "" )
 		{
-			$filtre = "id_facture ".$ordre;
+			$filtre = "id_facture desc ";
 			$sql = ' select * from details_facture where id_user = %d order by %s limit %d , 5 ';
 		}
 		elseif( $filtre != "" )
@@ -80,7 +80,7 @@ class Facture_Model extends CI_MODEL
 		$start = ( $page - 1 ) * 5; 
 		if( $filtre == "" )
 		{
-			$filtre = "id_facture ".$ordre;
+			$filtre = "id_facture desc ";
 			$sql = ' select * from details_facture order by %s limit %d , 5 ';
 		}
 		elseif( $filtre != "" )
