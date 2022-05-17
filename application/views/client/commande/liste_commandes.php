@@ -72,7 +72,7 @@
 								filtrer par
 								<select name="filtre" class="form-control">
 								    <option value="id_commande">Date de commande</option>
-								    <option value="id_etat_commande">Etat</option>
+								    <option value="id_etat_commandes">Etat</option>
 								</select>
 							</div>
 							<div class="form-group col-md-2">
