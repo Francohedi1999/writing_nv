@@ -16,6 +16,8 @@ insert into user_type( user_type ) values ( "Admin" );
 insert into user_type( user_type ) values ( "Client" ); 
 
 -- drop table user_type; 
+-- drop table user_type; 
+-- drop table user_type; 
 
 
 
