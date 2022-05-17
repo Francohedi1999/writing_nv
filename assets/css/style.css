@@ -1,0 +1,257 @@
+*{
+ 	padding: 0;
+ 	margin: 0; 	
+ } 
+
+.vl {
+  border-left: 1px solid #C0C0C0;
+  height: auto;
+}
+
+body {
+   overflow-x: hidden; 
+}
+
+table tr:hover
+{
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#nbc:hover
+{
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.lg_title
+{
+	  font-family: Brush Script MT, Brush Script Std, cursive;
+	  font-size: 40px;
+}
+
+@media screen and (max-width: 1000px)
+{
+	*{
+		  font-size: 10px;
+	}
+
+	.lg_title
+	{
+	  font-size: 25px;
+	}
+
+	.img_logo {
+	width: 30px;
+  height: 30px;
+	}
+}
+
+/*-------------------------------------------------------------------------------- INSCRIPTION / LOGIN / IDENTIFIER / RESET -----------------------------------------------------------------------------*/
+.form_log
+{
+	margin-left: 500px;
+	margin-right: 500px;
+}
+
+
+.form_reset
+{
+	margin-left: 500px;
+	margin-right: 500px;
+}
+
+.form_identifier
+{
+	margin-left: 500px;
+	margin-right: 500px;
+}
+
+.form_insc
+{
+	margin-left: 350px;
+	margin-right: 350px;
+}
+
+@media screen and (max-width: 1000px)
+{
+	.form_log
+	{
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	
+	.form_reset
+	{
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	.form_identifier
+	{
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	
+	.form_insc
+	{
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+.navigation
+{
+	grid-area: navigation;
+}
+
+.topbar
+{
+	margin-top: 100px;
+	grid-area: topbar;	
+}
+
+.contenu
+{
+	grid-area: contenu;
+}
+
+.commandes
+{
+	height: 400px; 
+	max-width: 950px; 
+	margin: 0px;
+}
+
+.clients
+{
+	height: 400px; 
+	max-width: 950px; 
+	margin: 0px auto;
+}
+
+.contenu_global
+{
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto;
+	grid-template-rows: auto auto auto;
+	grid-template-areas:
+	'navigation navigation navigation navigation navigation navigation'
+	'topbar topbar topbar topbar topbar topbar'
+	'contenu contenu contenu contenu contenu contenu';
+}
+
+.livraison
+{
+		display:none;
+}
+
+.md
+{
+		display:none;
+}
+
+.clps
+{
+		display:none;
+}
+
+.scroll_top
+{
+	position: fixed;
+	right: 0;
+	bottom: 100px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+@media screen and (max-width: 1000px)
+{
+	.btn_logout
+	{
+		display:none;
+	}
+
+
+	.btn_lgt
+	{
+		display: none;
+	}
+	
+}
+
+/*---------------------------à partir de 1000px------------------------------*/
+@media screen and (max-width: 1000px)
+{
+	.scroll_top
+	{
+		position: fixed;
+		right: 0;
+		bottom: 100px;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+	}
+
+	.vl
+	{
+		border-left: 0px solid white;
+	}
+	.topbar
+	{
+		margin-top: 50px;
+		font-size: 10px;
+	}
+	.contenu_global
+	{
+		margin-bottom: 10px;
+		margin-left: 0px;
+		margin-right: 0px;
+		display: grid;
+		grid-template-columns: auto auto auto auto auto auto;
+		grid-template-rows: auto auto auto;
+		grid-template-areas:
+		'navigation navigation navigation navigation navigation navigation'
+		'topbar topbar topbar topbar topbar topbar'
+		'contenu contenu contenu contenu contenu contenu';
+	}
+}
+ 
+p.message {
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  height:auto;
+  animation-duration: 3s;
+  animation-name: glissement;
+  animation-iteration-count: 1;
+}
+
+.message {
+  padding: 10px;
+  margin: 20px;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  height:auto;
+  animation-duration: 3s;
+  animation-name: glissement;
+  animation-iteration-count: 1;
+}
+
+.form_echec {
+  padding: 10px;
+  border-radius: solid 2px;
+  height:auto;
+  animation-duration: 1s;
+  animation-name: glissement;
+  animation-iteration-count: 1;
+}
+
+@keyframes glissement {
+  from {
+    margin-left: 100%;
+    width: 300%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
