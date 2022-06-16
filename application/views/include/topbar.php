@@ -5,7 +5,11 @@
 <div class="menu_nav">
   <div class="bars">    
    <ul>                
-      <li><a onclick="get_menu( 'menu_choix' )"><i class="fa fa-bars"></i></a></li> 
+      <li>
+        <a onclick="get_menu( 'menu_choix' )">
+          <button class="btn"><i class="fa fa-bars"></i></button>
+        </a>
+      </li> 
    </ul>  
   </div>
   <div id="menu_choix">
@@ -73,7 +77,11 @@
 <div class="menu_nav">
   <div class="bars">    
    <ul>                
-      <li><a onclick="get_menu( 'menu_choix' )"><i class="fa fa-bars"></i></a></li> 
+      <li>
+        <a onclick="get_menu( 'menu_choix' )">
+          <button class="btn"><i class="fa fa-bars"></i></button>
+        </a>
+      </li> 
    </ul>  
   </div>
   <div id="menu_choix">
@@ -119,7 +127,11 @@
 <div class="menu_nav">
   <div class="bars">    
    <ul>                
-      <li><a onclick="get_menu( 'menu_choix' )"><i class="fa fa-bars"></i></a></li> 
+      <li>
+        <a onclick="get_menu( 'menu_choix' )">
+          <button class="btn"><i class="fa fa-bars"></i></button>
+        </a>
+      </li>
    </ul>  
   </div>
   <div id="menu_choix">

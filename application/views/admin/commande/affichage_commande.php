@@ -120,10 +120,10 @@
                     		</div>
                     	</form>
 
-                    	<button onclick="open_form_motif( 'clps' )" class="btn btn-danger">Echouer</button>
+                    	<button onclick="open_form( 'motif_echec' )" class="btn btn-danger">Echouer</button>
 
-                    	<div id="clps" class="clps mt-2">
-												<form method="post" action="<?php echo site_url('Admin/update_etat_commande');?>">
+                    	<div id="motif_echec" class="clps mt-2">
+							<form method="post" action="<?php echo site_url('Admin/update_etat_commande');?>">
 		                   		<div class="form-row">
 		                   			<div class="form-group col-md-12">
 		                   				<label>Motif</label>
@@ -134,11 +134,13 @@
 		                   			</div>
 		                   		</div>
 		                   	</form>
-		                   	<a onclick="close_form_motif( 'clps' )" class="btn">
-		                   		<img src="<?php echo site_url('assets/images/close_b.png')?>" width="20px" height="20px">
-		                   		Annuler
+		                   	<a onclick="close_form_motif( 'motif_echec' )" class="btn">
+		                   		<button class="btn">
+		                   			<i class="fa fa-close" style="color:black;"></i>
+		                   			Annuler
+		                   		</button>	
 		                   	</a>
-											</div>
+						</div>
 
                     	<?php } ?>
                    
@@ -242,8 +244,8 @@
 											<li class="list-group-item bg-primary text-white">
 												<h6>
 													<pre class="text-white"><?php echo $commentaires[$i]['commentaire'] ;?></pre>
-													<a onclick="open_form_motif( 'option<?php echo $commentaires[$i]['id_commentaire'] ;?>' )" class="float-right mt-3">
-													<i class="fa fa-ellipsis-v"></i>
+													<a class="float-right mt-3" onclick="open_form_motif( 'option<?php echo $commentaires[$i]['id_commentaire'] ;?>' )">
+														<button class="btn"><i class="fa fa-ellipsis-v"></i></button>
 													</a>
 												</h6>		
 												<hr>									
@@ -261,9 +263,10 @@
 													</a>
 													<a class="text-dark ml-3 mt-3" href="<?php echo site_url('Admin/modification_commentaire/'.$commentaires[$i]['id_commentaire']); ?>">
 														<i class="fa fa-edit"></i>
-													</a>				
-													<a onclick="close_form_motif( 'option<?php echo $commentaires[$i]['id_commentaire'] ;?>' )"  class="float-right mt-3">
-														<i class="fa fa-angle-up"></i>
+													</a>	
+													<hr>			
+													<a onclick="close_form_motif( 'option<?php echo $commentaires[$i]['id_commentaire'] ;?>' )"  class="float-right">
+														<button class="btn"><i class="fa fa-angle-up"></i></button>														
 													</a>								
 												</div>
 

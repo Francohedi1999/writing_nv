@@ -367,7 +367,7 @@ Default charset = 'UTf8';
 -- update user set nom_user = 'writing is Bae' , mail_user = 'writingisbae7@gmail.com',  mdp_user = sha1('Writingisbaefoana*7') where id_user = 1;
 -- ---------------------------------------------------------------------------------------MBOLA TSY TAFIDITRA---------------------------------------------------------------------------------------------------
 
-insert into user(nom_user , mail_user , mdp_user , id_user_type , date_inscri) values('admin' , 'admin@admin.admin' , sha1('adminadmin') , 1 , current_date );
+insert into user(nom_user , mail_user , mdp_user , id_user_type , date_inscri) values('Writing is Bae' , 'writingisbae7@gmail.com' , sha1('Writingisbaefoana*7') , 1 , current_date );
 
 
 create or replace view client as 

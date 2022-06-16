@@ -26,6 +26,13 @@ function open_form_motif( id )
 }
 
 
+function open_form( id ) 
+{
+  var div = document.getElementById( id );
+  div.style.display = "block";
+}
+
+
 function close_form_motif(id) 
 {
   var div = document.getElementById( id );

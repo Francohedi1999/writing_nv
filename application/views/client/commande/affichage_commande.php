@@ -142,7 +142,7 @@
 													<h6>
 														<pre class="text-white"><?php echo $commentaires[$i]['commentaire'] ;?></pre>
 														<a onclick="open_form_motif( 'option<?php echo $commentaires[$i]['id_commentaire'] ;?>' )"  class="float-right mt-3">
-														<i class="fa fa-ellipsis-v"></i>
+														<button class="btn"><i class="fa fa-ellipsis-v"></i></button>
 														</a>
 													</h6>											
 													<hr>
@@ -162,7 +162,7 @@
 															<i class="fa fa-edit"></i>
 														</a>				
 														<a onclick="close_form_motif( 'option<?php echo $commentaires[$i]['id_commentaire'] ;?>' )"  class="float-right mt-3">
-															<i class="fa fa-angle-up"></i>
+															<button class="btn"><i class="fa fa-angle-up"></i></button>
 														</a>								
 													</div>
 

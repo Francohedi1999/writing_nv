@@ -8,7 +8,7 @@ class Home extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('captcha');
-		$this->load->helper('email');
+// 		$this->load->helper('sendmail');
 		$this->load->library('form_validation');
 		$this->load->model('User_Model');
 		$this->load->model('Commentaire_Model');
@@ -201,13 +201,16 @@ class Home extends CI_Controller {
 					$nom_recepteur = $user['nom_user'];
 
 					$objet = 'Réinitialisation mot de passe'; 
-					$message = '<p>Salut '.$user['nom_user'].'!</p> <p>Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous</p>';
+					$message = '<p>Salut '.$user['nom_user'].'!</p> 
+								<p>Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien ci-dessous</p>';
 
 					$url = site_url( "Home/reset_password/".$user['id_user'] );
 
-					$lien = '<a href="'.$url.'">'.$url.'</a><p>Merci</p> <p>'.$nom_editeur.'</p>';
+					$lien = '<a href="'.$url.'">'.$url.'</a>
+							<p>Merci</p> 
+							<p>'.$nom_editeur.'</p>';
 
-					send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
+					// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 					$this->session->set_flashdata( 'message' , 'Veuillez vérifier votre email' );
 
 					redirect( site_url( "Home/identifier" ) );
