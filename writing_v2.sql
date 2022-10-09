@@ -132,8 +132,6 @@ create table user
 )engine = InnoDB
 Default charset = 'UTf8';
 
-v
-
 create or replace view users_client as
 select
 	user.id_user as id_user,
