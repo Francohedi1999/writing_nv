@@ -11,35 +11,27 @@
 // 	require_once APPPATH.'third_party/PHPMailer/PHPMailer.php';
 // 	require_once APPPATH.'third_party/PHPMailer/SMTP.php';
 
-// 	$mail = new PHPMailer(true);
+// 	$mail = new PHPMailer();
 
 // 	$mail->IsSMTP();
 
-// 	$mail->CharSet = 'UTF-8';
+// 	$mail->SMTPDebug  = 0;
 
-// 	$mail->SMTPDebug  = 0;                     
-
-// 	$mail->SMTPAuth   = true;       
-	
+// 	$mail->Host = "new.serveurgasy.com"; 
+// 	$mail->SMTPAuth = true;
 // 	$mail->SMTPSecure = 'ssl';
-	
-// 	$mail->Host       = "new.serveurgasy.com"; 
+// 	$mail->Port = 465;               
 
-// 	$mail->Port       = 465;               
-
-// 	$mail->Username   = "contact@writing.booknews.today"; 
-
+// 	$mail->Username  = "contact@writing.booknews.today"; 
 // 	$mail->Password   = "?5?sWntm}8#1";             
 
 // 	$mail->setFrom( $email_editeur , $nom_editeur );			// email_editeur , nom_editeur
-	
-// 	$mail->Subject =  $objet;									// objet
+// 	$mail->addAddress( $email_recepteur );		// email_recepteur , nom_recepteur
+// 	$mail->addReplyTo( $email_editeur );		// email_recepteur , nom_recepteur
 
-// 	$mail->Body    = $message;	                                // message
-
-// 	$mail->addAddress( $email_recepteur , $nom_recepteur );		// email_recepteur , nom_recepteur
-
-// 	$mail->isHTML(true);                  
+// 	$mail->isHTML(true);   
+// 	$mail->Subject =  $objet;									
+// 	$mail->Body    = $message;                   
 
 // 	$mail->send();
 	

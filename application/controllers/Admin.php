@@ -8,7 +8,7 @@ class Admin extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('captcha');
-// 		$this->load->helper('sendmail');
+		$this->load->helper('email');
 		$this->load->library('form_validation');
 		$this->load->model('User_Model');
 		$this->load->model('Commande_Model');
@@ -157,17 +157,16 @@ class Admin extends CI_Controller {
 			$email_recepteur = $user['mail_user'];
 			$nom_recepteur = $user['nom_user'];
 
+			$url = site_url( 'Client/details_commande/'.$id_commande) ;
+			$lien = '<a href="'.$url.'">'.$url.'</a><p>Merci</p>';
+
 			if( $id_etat_commande == 2 )
 			{
 				$this->Commande_Model->update_etat_commande_by_id_commande( $id_commande , $id_etat_commande );
 
 				$objet = 'Votre commande n° '.$id_commande.' est validée';
-				$message = '<p>Salut '.$nom_recepteur.'!</p>
-							<p>Votre commande n° '.$id_commande.' est validée.</p>
-							<br>
-							<p><b>'.$nom_editeur.'</b></p>';
-
-				// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+				$message = '<p>Salut '.$nom_recepteur.'!</p> <p>Votre commande n° '.$id_commande.' est validée.</p><p>'.$nom_editeur.'</p>Cliquer sur le lien ci-dessus pour plus de détails.<br>';
+				send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 
 				$this->session->set_flashdata( 'message' , 'Cette commande est validée' );
 		  	}
@@ -176,12 +175,8 @@ class Admin extends CI_Controller {
 				$this->Commande_Model->update_etat_commande_by_id_commande( $id_commande , $id_etat_commande );
 
 				$objet = 'Votre commande n° '.$id_commande.' est en cours de rédaction';
-				$message = '<p>Salut '.$nom_recepteur.'!</p>
-							<p>Votre commande n° '.$id_commande.' est en cours de rédaction.</p>
-							<br>
-							<p><b>'.$nom_editeur.'</b></p>';
-
-				// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+				$message = '<p>Salut '.$nom_recepteur.'!</p> <p>Votre commande n° '.$id_commande.' est en cours de rédaction.</p><p>'.$nom_editeur.'</p>Cliquer sur le lien ci-dessus pour plus de détails.<br>';
+				send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 				
 				$this->session->set_flashdata( 'message' , 'Cette commande est en cours de rédaction' );
 			}
@@ -202,12 +197,8 @@ class Admin extends CI_Controller {
 		     		$this->Commentaire_Model->insert_commentaire( $_SESSION['id_user'] , $id_commande , $commentaire , $_FILES['fichier']['name'] ); 
 
 			  		$objet = 'Votre commande n° '.$id_commande.' est livrée';
-					$message = '<p>Salut '.$nom_recepteur.'!</p>
-								<p>Votre commande n° '.$id_commande.' est livrée.</p>
-								<br>
-								<p><b>'.$nom_editeur.'</b></p>';
-
-					// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+					$message = '<p>Salut '.$nom_recepteur.'!</p> <p>Votre commande n° '.$id_commande.' est livrée.</p><p>'.$nom_editeur.'</p>Cliquer sur le lien ci-dessus pour plus de détails.<br>';
+					send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 
 		            $this->session->set_flashdata( 'message' , 'Cette commande est livrée' );
 	        	}				
@@ -223,21 +214,13 @@ class Admin extends CI_Controller {
 				if ( $message_motif == "" ) 
 				{
 					$message_motif = 'Votre commande n° '.$id_commande.' est échouée';
-					$message = '<p>Salut '.$nom_recepteur.'!</p>
-								<p><pre>'.$message_motif.'</pre></p>
-								<br>
-								<p><b>'.$nom_editeur.'</b></p>';
-
-					// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+					$message = '<p>Salut '.$nom_recepteur.'!</p> <pre>'.$message_motif.'</pre><p>'.$nom_editeur.'</p>Cliquer sur le lien ci-dessus pour plus de détails.<br>';
+					send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 				}
 				elseif( $message_motif != "" )
 				{					
-					$message = '<p>Salut '.$nom_recepteur.'!</p>
-								<p><pre>Motif: '.$message_motif.'</pre></p>
-								<br>
-								<p><b>'.$nom_editeur.'</b></p>';
-
-					// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+					$message = '<p>Salut '.$nom_recepteur.'!</p> <pre>Motif: '.$message_motif.'</pre><p>'.$nom_editeur.'</p>Cliquer sur le lien ci-dessus pour plus de détails.<br>';
+					send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 				}
 				$this->session->set_flashdata( 'message' , 'Cette commande est échouée' );
 			}
@@ -515,11 +498,12 @@ class Admin extends CI_Controller {
 
 		$objet = "Paiement facture";	
 
-		$message = "<p>Votre facture n° ".$id_facture." est payée.</p>
-					<br>
-					<p><b>".$nom_editeur."</b></p>";
+		$message = "<p>Votre facture n° ".$id_facture." est payée.</p>Cliquer sur le lien ci-dessus pour plus de détails.<br>";
 
-		// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+		$url = site_url("Client/details_facture/".$id_facture);
+		$lien = '<a href="'.$url.'">'.$url.'</a>';
+
+		send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 
 		$this->session->set_flashdata( 'message' , 'Cette facture a été payée');
 		redirect( site_url("Admin/details_facture/".$id_facture) );
@@ -684,20 +668,13 @@ class Admin extends CI_Controller {
 				$this->User_Model->update_accessibility_user( $id_user , $banni );
 				if( $motif == "" )
 				{
-					$message = '<p>Votre compte a été désactivé</p>
-								<p>Merci</p> 
-								<br>
-								<p><b>'.$nom_editeur.'</b></p>';
+					$message = '<p>Votre compte a été désactivé</p><p>Merci</p>'.$nom_editeur;
 				} 
 				elseif( $motif != "" )
 				{					
-					$message = '<p>Votre compte a été désactivé</p>
-								<p><pre>Motif: '.$motif.'</pre><p>
-								<p>Merci</p> 
-								<br>
-								<p><b>'.$nom_editeur.'</b></p>';
+					$message = '<p>Votre compte a été désactivé</p><pre>Motif: '.$motif.'</pre><p>Merci</p>'.$nom_editeur;
 				}
-		  		// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+		  		send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
 
 				$this->session->set_flashdata( 'message' , 'Cet compte a été désactivé');
 			}
@@ -706,12 +683,8 @@ class Admin extends CI_Controller {
 				$banni = 0;
 				$this->User_Model->update_accessibility_user( $id_user , $banni );	
 
-				$message = '<p>Votre compte a été réactivé</p> 
-							<p>Merci</p> 
-							<br>
-							<p><b>'.$nom_editeur.'</b></p>';
-
-		  		// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+				$message = '<p>Votre compte a été réactivé</p>M<p>Merci</p>'.$nom_editeur;
+		  		send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
 
 				$this->session->set_flashdata( 'message' , 'Cet compte a été réactivé');
 			}
@@ -774,9 +747,10 @@ class Admin extends CI_Controller {
 			$nom_recepteur = $commande['nom_user'];
 
 			$objet = "Nouveau commentaire";
-			$message = '<p>'.$nom_editeur.' a commenté votre commande n° '.$id_commande.'.</p>
-						<br>
-						<p><b>'.$nom_editeur.'</b></p>';
+			$message = $nom_editeur." a commenté votre commande n° ".$id_commande.'.<br> Pour plus de détails, veuillez cliquer sur le lien ci-dessous.<br>';
+
+			$url = site_url( "Client/details_commande/".$id_commande);
+			$lien = '<a href="'.$url.'">'.$url.'</a>';
 
 		  	// S'il y a un fichier
 		  	if( ! empty( $_FILES['fichier']['name'] ) )
@@ -789,7 +763,7 @@ class Admin extends CI_Controller {
 	    			// INSERT FICHIER SEULEMENT	
 					$this->Commentaire_Model->insert_commentaire( $id_user , $id_commande , "" , $_FILES['fichier']['name'] ); 
 					
-		  			// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+		  			send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 					$this->session->set_flashdata( 'message' , 'Votre commentaire sur cette commande est bien enregistré' );	  			
 	    		}
 	    		elseif( $commentaire != ""  )
@@ -797,7 +771,7 @@ class Admin extends CI_Controller {
 	    			// INSERT COMMENTAIRE ET FICHIER 
 	     			$this->Commentaire_Model->insert_commentaire( $id_user , $id_commande , $commentaire , $_FILES['fichier']['name'] ); 
 	     			
-		  			// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+		  			send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 	     			$this->session->set_flashdata( 'message' , 'Votre commentaire sur cette commande est bien enregistré' );	  			
 	    		}
 		
@@ -809,7 +783,7 @@ class Admin extends CI_Controller {
 		  		{
 		  			$this->Commentaire_Model->insert_commentaire( $id_user , $id_commande , $commentaire , "" ); 
 
-		  			// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+		  			send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 		  			$this->session->set_flashdata( 'message' , 'Votre commentaire sur cette commande est bien enregistré' );	  			
 		  		}
 		  		elseif(   $commentaire == ""  )

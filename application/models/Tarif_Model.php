@@ -45,6 +45,16 @@ class Tarif_Model extends CI_MODEL
 		return $tarifs;
 	}
 
+	function find_all_tarif_active_with_pagination( $page )
+	{
+		$start = ( $page - 1 ) * 3; 
+		$sql = ' select * from tarifs where is_active = 1 limit %d , 3' ;
+		$sql = sprintf($sql , $start);
+		$query = $this->db->query($sql);
+		$tarifs = $query->result_array();
+		return $tarifs;
+	}
+
 	function find_all_tarif()
 	{
 		$query = $this->db->query(' select * from tarifs ');

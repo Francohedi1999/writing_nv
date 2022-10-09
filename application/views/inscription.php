@@ -26,6 +26,24 @@
 				<form class="mt-4" method="post" action="<?php echo site_url('home/register'); ?>">
 
 					<div class="form-row">
+						
+						<div class="form-group col-md-12">
+							<label>Utilisateur</label>
+							<select name="id_user_type" class="form-control">
+							<?php for($i=0 ; $i<count($user_type) ; $i++){?>
+								<option value="<?php echo $user_type[$i]['id_user_type'];?>">
+								<?php echo $user_type[$i]['user_type'];?>
+								</option>
+							<?php }?>
+							</select>
+							<?php if(isset($message_error_user)){?>
+								<span><p class="text-danger"><?php echo $message_error_user; ?></p></span>
+							<?php }?>
+						</div>
+
+					</div>
+
+					<div class="form-row">
 
 						<div class="form-group col-md-6">
 							<label>Nom</label>	

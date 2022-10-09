@@ -8,7 +8,7 @@ class Client extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('captcha','url','form');
-// 		$this->load->helper('sendmail');
+		$this->load->helper('email');
 		$this->load->library('form_validation');
 		$this->load->library('pagination');
 		$this->load->model('User_Model');
@@ -203,11 +203,12 @@ class Client extends CI_Controller {
 			
 			$objet = "Annulation commande du client n° ".$client['id_user'] ;
 
-			$message = '<p>'.$nom_editeur.' a annulé sa commande n° '.$id_commande.'.</p>
-						<br>
-						<p><b>'.$nom_editeur.'</b></p>';
+			$message = '<p>'.$nom_editeur.' a annulé sa commande n° '.$id_commande.'.<br> Pour plus de détails, veuillez cliquer sur le lien ci-dessous</p>';
+					
+			$url = site_url( "Admin/details_commande/".$id_commande);
+			$lien = '<a href="'.$url.'">'.$url.'</a>';
 
-			// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+			send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 
 			$this->session->set_flashdata( "message" , "Cette commande est bien annulée" );
 			redirect( site_url("Client/details_commande/".$id_commande) );
@@ -382,9 +383,10 @@ class Client extends CI_Controller {
 
 			$objet = "Nouvelle commande du client n° ".$client['id_user'] ;
 
-			$message = '<p>'.$nom_editeur.' a effectué une nouvelle commande.</p>
-						<br>
-						<p><b>Client n° '.$client['id_user'].'</b></p>';
+			$message = '<p>'.$nom_editeur.' a effectué une nouvelle commande.<br> Pour plus de détails, veuillez cliquer sur le lien ci-dessous</p>';
+
+			$url = site_url( "Admin/details_commande/".$id_commande);
+			$lien = '<a href="'.$url.'">'.$url.'</a>';
 
 			$facture = $this->Facture_Model->find_all_factures_by_id_commande( $id_commande );
 			$commande = $this->Commande_Model->find_commande_by_id_commande($id_commande);
@@ -407,7 +409,7 @@ class Client extends CI_Controller {
 					{
 						$this->Facture_Model->insert_facture( $id_user , $id_commande );
 
-						// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+						send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 
 						$this->session->set_flashdata( 'message' , 'Votre commande est bien enregistrée');
 					}					
@@ -626,9 +628,10 @@ class Client extends CI_Controller {
 
 					$objet = "Nouvelle commande du client n° ".$client['id_user'] ;
 
-					$message = '<p>'.$nom_editeur.' a effectué une nouvelle commande.</p>
-								<br>
-								<p><b>Client n° '.$client['id_user'].'</b></p>';
+					$message = '<p>'.$nom_editeur.' a effectué une nouvelle commande.<br> Pour plus de détails, veuillez cliquer sur le lien ci-dessous</p>';
+					
+					$url = site_url( "Admin/details_commande/".$id_commande);
+					$lien = '<a href="'.$url.'">'.$url.'</a>';
 
 					$prix = $this->Tarif_Model->find_tarif_by_id_tarif( $id_tarif );
 
@@ -668,7 +671,7 @@ class Client extends CI_Controller {
 																								$client['is_fidele']);
 									$this->Facture_Model->insert_facture( $id_user , $id_commande );
 
-									// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+									send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 
 									$this->session->set_flashdata( 'message' , 'Votre commande est bien enregistrée');
 									redirect( site_url("Client/commandes") );	
@@ -708,7 +711,7 @@ class Client extends CI_Controller {
 																							$client['is_fidele']);
 								$this->Facture_Model->insert_facture( $id_user , $id_commande );
 
-								// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+								send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 
 								$this->session->set_flashdata( 'message' , 'Votre commande est bien enregistrée');
 								redirect( site_url("Client/commandes") );	
@@ -879,9 +882,11 @@ class Client extends CI_Controller {
 
 			$objet = "Nouveau commentaire du client n° ".$client['id_user'] ;
 
-			$message = '<p>'.$nom_editeur." a commenté sa commande n° ".$id_commande.'.<p>
-						<br>
-						<p><b>Client n°'.$client['id_user'].'</b></p>';
+			$message = $nom_editeur." a commenté sa commande n° ".$id_commande.'.<br> Pour plus de détails, veuillez cliquer sur le lien ci-dessous.<br>';
+
+			$url = site_url( "Admin/details_commande/".$id_commande);
+			$lien = '<a href="'.$url.'">'.$url.'</a>';
+
 		    
 		  	// S'il y a un fichier 
 		  	if( ! empty( $_FILES['fichier']['name'] ) )
@@ -898,7 +903,7 @@ class Client extends CI_Controller {
 	    			// INSERT COMMENTAIRE ET FICHIER 
 	     			$this->Commentaire_Model->insert_commentaire( $id_user , $id_commande , $commentaire , $_FILES['fichier']['name'] );     			
 	    		}
-	    		// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
+	    		send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 	    		$this->session->set_flashdata( 'message' , 'Votre commentaire sur cette commande est bien enregistré');
 		  	}
 		  	// si non
@@ -908,9 +913,7 @@ class Client extends CI_Controller {
 		  		{
 		  			// INSERT COMMENTAIRE ET FICHIER 
 		  			$this->Commentaire_Model->insert_commentaire( $id_user , $id_commande , $commentaire , "" ); 
-
-		  			// send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message );
-
+		  			send_mail( $email_editeur , $nom_editeur , $email_recepteur , $nom_recepteur , $objet , $message.$lien );
 	    			$this->session->set_flashdata( 'message' , 'Votre commentaire sur cette commande est bien enregistré');
 		  		}
 		  		elseif( $commentaire == "" )

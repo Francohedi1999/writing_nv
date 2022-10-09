@@ -5,11 +5,7 @@
 <div class="menu_nav">
   <div class="bars">    
    <ul>                
-      <li>
-        <a onclick="get_menu( 'menu_choix' )">
-          <button class="btn"><i class="fa fa-bars"></i></button>
-        </a>
-      </li> 
+      <li><a onclick="get_menu( 'menu_choix' )"><i class="fa fa-bars"></i></a></li> 
    </ul>  
   </div>
   <div id="menu_choix">
@@ -59,7 +55,13 @@
       <li>
         <a href="<?php echo site_url('Admin/langues'); ?>">
           <i class="fa fa-language pr-2"></i>
-          Langue
+          Langues
+        </a>
+      </li> 
+      <li>
+        <a href="#">
+          <i class="fa fa-font pr-2"></i>
+          Rédacteurs
         </a>
       </li>                     
       <li class="logout_btn">
@@ -77,11 +79,7 @@
 <div class="menu_nav">
   <div class="bars">    
    <ul>                
-      <li>
-        <a onclick="get_menu( 'menu_choix' )">
-          <button class="btn"><i class="fa fa-bars"></i></button>
-        </a>
-      </li> 
+      <li><a onclick="get_menu( 'menu_choix' )"><i class="fa fa-bars"></i></a></li> 
    </ul>  
   </div>
   <div id="menu_choix">
@@ -127,11 +125,7 @@
 <div class="menu_nav">
   <div class="bars">    
    <ul>                
-      <li>
-        <a onclick="get_menu( 'menu_choix' )">
-          <button class="btn"><i class="fa fa-bars"></i></button>
-        </a>
-      </li>
+      <li><a onclick="get_menu( 'menu_choix' )"><i class="fa fa-bars"></i></a></li> 
    </ul>  
   </div>
   <div id="menu_choix">
@@ -143,17 +137,55 @@
         </a>
       </li>
       <li>
-        <a href="<?php echo site_url('Home/register'); ?>">
+        <div class="dropdown">
           <i class="fa fa-pencil-square-o pr-2"></i>
-           S'inscrire
-        </a>
+          <a href="#">
+             S'inscrire
+          </a>
+          <div class="dropdown_content">
+            <ul>
+              <li><a href="<?php echo site_url('Home/register_client'); ?>">Client</a></li>
+              <li><a href="<?php echo site_url('Home/register_redacteur'); ?>">Rédacteur</a></li>
+            </ul>
+          </div>
+        </div>
       </li>
+
       <li>
         <a href="<?php echo site_url('Home/identifier'); ?>">
           <i class="fa fa-question-circle-o pr-2"></i>
           Mot de passe oublié ?
         </a>
-      </li>                    
+      </li> 
+
+      <li>
+        <a href="<?php echo site_url('Home/tarifs'); ?>">
+          <i class="fa fa-money pr-2"></i>
+          Nos tarifs de rédaction
+        </a>
+      </li> 
+
+      <li>
+        <a href="<?php echo site_url('Home/paiements'); ?>">
+          <i class="fa fa-shopping-cart pr-2"></i>
+          Nos types de paiements
+        </a>
+      </li>
+
+      <li>
+        <a href="<?php echo site_url('Home/redacteurs'); ?>">
+          <i class="fa fa-font pr-2"></i>
+          Nos types de rédacteur
+        </a>
+      </li> 
+
+      <li>
+        <a href="<?php echo site_url('Home/contact'); ?>">
+          <i class="fa fa-whatsapp pr-2"></i>
+          Contact
+        </a>
+      </li> 
+
     </ul>  
   </div>
 </div>

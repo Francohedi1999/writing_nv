@@ -241,14 +241,14 @@ class Commande_Model extends CI_MODEL
 
 	
 
-	// -------------------------------------------------------------------VIEW DETAILS_COMMANDE----------------------------------------------------------------------------
+	// -------------------------------------------------------------------VIEW COMMANDES----------------------------------------------------------------------------
 
 
 	// ---------------- COMMANDE PAR USER --------------------- //
 	
 	function find_last_command_by_id_user($id_user)
 	{
-		$sql = ' select * from details_commande where id_user = %d order by id_commande desc limit 1 ';
+		$sql = ' select * from commandes where id_user = %d order by id_commande desc limit 1 ';
 		$sql = sprintf($sql , $id_user);
 		$query = $this->db->query($sql);
 		$last_command = $query->row_array();
@@ -258,7 +258,7 @@ class Commande_Model extends CI_MODEL
 	
 	function find_commande_by_id_commande($id_commande)
 	{
-		$sql = ' select * from details_commande where id_commande = %d ';
+		$sql = ' select * from commandes where id_commande = %d ';
 		$sql = sprintf($sql , $id_commande);
 		$query = $this->db->query( $sql );
 		$commandes = $query->row_array();
@@ -288,12 +288,12 @@ class Commande_Model extends CI_MODEL
 			$filtre = 'id_commande desc';
 			if( $date_commande_1 == "" && $date_commande_2  == "" )
 			{
-				$sql = " select * from details_commande where id_user = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
+				$sql = " select * from commandes where id_user = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 				$sql = sprintf( $sql , $id_user , str_replace( "'" , "''" , $titre_commande) , $filtre , $start );
 			}
 			elseif( $date_commande_1 != "" && $date_commande_2  == "" )
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where 
 						id_user = %d and 
 						titre_commande like "%%%s%%" 
@@ -302,7 +302,7 @@ class Commande_Model extends CI_MODEL
 			}
 			else
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where 
 						id_user = %d and 
 						titre_commande like "%%%s%%" 
@@ -315,7 +315,7 @@ class Commande_Model extends CI_MODEL
 			$filtre = $filtre." ".$ordre ;
 			if( $date_commande_1 == "" && $date_commande_2 == "" )
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where 
 						id_user = %d and 
 						titre_commande like "%%%s%%" order by %s limit %d , 5 ';	
@@ -323,7 +323,7 @@ class Commande_Model extends CI_MODEL
 			}
 			elseif( $date_commande_1 != "" && $date_commande_2  == "" )
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where 
 						id_user = %d and 
 						titre_commande like "%%%s%%" 
@@ -332,7 +332,7 @@ class Commande_Model extends CI_MODEL
 			}
 			else
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where 
 						id_user = %d and 
 						titre_commande like "%%%s%%" 
@@ -340,6 +340,7 @@ class Commande_Model extends CI_MODEL
 				$sql = sprintf( $sql , $id_user , str_replace( "'" , "''" , $titre_commande) , $date_commande_1 , $date_commande_2 , $filtre , $start );
 			}
 		}
+		// echo $sql;
 		$query = $this->db->query($sql);
 		$commandes = $query->result_array();
 		return $commandes;
@@ -351,7 +352,7 @@ class Commande_Model extends CI_MODEL
 
 	function find_all_commandes_by_id_etat( $id_etat_commande )
 	{	
-		$sql = ' select * from details_commande where id_etat_commande = %d and modifiable = 0 ';	
+		$sql = ' select * from commandes where id_etat_commande = %d and modifiable = 0 ';	
 		$sql = sprintf( $sql , $id_etat_commande );
 		$query = $this->db->query($sql);
 		$commandes = $query->result_array();
@@ -366,11 +367,11 @@ class Commande_Model extends CI_MODEL
 		if( $filtre == "" )
 		{
 			$filtre = 'id_commande desc';
-			$sql = " select * from details_commande where id_etat_commande = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
+			$sql = " select * from commandes where id_etat_commande = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 		}
 		elseif( $filtre != "" )
 		{
-			$sql = " select * from details_commande where id_etat_commande = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
+			$sql = " select * from commandes where id_etat_commande = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 		}
 		$sql = sprintf( $sql , $id_etat_commande , str_replace( "'" , "''" , $titre_commande) , $filtre , $start );
 		$query = $this->db->query($sql);
@@ -385,7 +386,7 @@ class Commande_Model extends CI_MODEL
 
 	function find_all_commandes_by_id_tarif( $id_tarif )
 	{	
-		$sql = ' select * from details_commande where id_tarif = %d and modifiable = 0 ';	
+		$sql = ' select * from commandes where id_tarif = %d and modifiable = 0 ';	
 		$sql = sprintf( $sql , $id_tarif );
 		$query = $this->db->query($sql);
 		$commandes = $query->result_array();
@@ -400,12 +401,12 @@ class Commande_Model extends CI_MODEL
 		if( $filtre == "" )
 		{
 			$filtre = 'id_commande desc';
-			$sql = " select * from details_commande where id_tarif = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
+			$sql = " select * from commandes where id_tarif = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 		}
 		elseif( $filtre != "" )
 		{
 			$filtre = $filtre.' '.$ordre;
-			$sql = " select * from details_commande where id_tarif = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
+			$sql = " select * from commandes where id_tarif = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 		}
 		$sql = sprintf( $sql , $id_tarif , str_replace( "'" , "''" , $titre_commande) , $filtre , $start );
 		$query = $this->db->query($sql);
@@ -424,11 +425,11 @@ class Commande_Model extends CI_MODEL
 		if( $filtre == "" )
 		{
 			$filtre = 'id_commande desc';
-			$sql = " select * from details_commande where id_user = %d and id_etat_commande = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
+			$sql = " select * from commandes where id_user = %d and id_etat_commande = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 		}
 		elseif( $filtre != "" )
 		{
-			$sql = " select * from details_commande where id_user = %d and id_etat_commande = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
+			$sql = " select * from commandes where id_user = %d and id_etat_commande = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 		}
 		$sql = sprintf( $sql , $id_user , $id_etat_commande , str_replace( "'" , "''" , $titre_commande) , $filtre , $start );
 		$query = $this->db->query($sql);
@@ -438,7 +439,7 @@ class Commande_Model extends CI_MODEL
 
 	function get_commande_by_id_user_id_etat_commande( $id_user , $id_etat_commande )
 	{
-		$sql = ' select * from details_commande where id_user = %d and modifiable = 0 and id_etat_commande = %d order by id_commande desc ';
+		$sql = ' select * from commandes where id_user = %d and modifiable = 0 and id_etat_commande = %d order by id_commande desc ';
 		$sql = sprintf( $sql , $id_user , $id_etat_commande);
 		$query = $this->db->query( $sql );
 		$commandes_clients = $query->result_array();
@@ -458,12 +459,12 @@ class Commande_Model extends CI_MODEL
 			$filtre = 'id_commande desc ';
 			if( $date_commande_1 == "" && $date_commande_2  == "" )
 			{
-				$sql = " select * from details_commande where modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
+				$sql = " select * from commandes where modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
 				$sql = sprintf( $sql , str_replace( "'" , "''" , $titre_commande) , $filtre , $start );
 			}
 			elseif( $date_commande_1 != "" && $date_commande_2  == "" )
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where  
 						titre_commande like "%%%s%%" 
 						and date_commande>="%s" order by %s limit %d , 5 ';	
@@ -471,7 +472,7 @@ class Commande_Model extends CI_MODEL
 			}
 			else
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where 
 						titre_commande like "%%%s%%" 
 						and date_commande>="%s" and date_commande<="%s" order by %s limit %d , 5 ';	
@@ -483,14 +484,14 @@ class Commande_Model extends CI_MODEL
 			$filtre = $filtre." ".$ordre ;
 			if( $date_commande_1 == "" && $date_commande_2 == "" )
 			{
-				$sql = ' select * from details_commande 
-						where 
+				$sql = ' select * from commandes 
+						where
 						titre_commande like "%%%s%%" order by %s limit %d , 5 ';	
 				$sql = sprintf( $sql , str_replace( "'" , "''" , $titre_commande) , $filtre , $start );
 			}
 			elseif( $date_commande_1 != "" && $date_commande_2  == "" )
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where 
 						titre_commande like "%%%s%%" 
 						and date_commande>="%s" order by %s limit %d , 5 ';	
@@ -498,7 +499,7 @@ class Commande_Model extends CI_MODEL
 			}
 			else
 			{
-				$sql = ' select * from details_commande 
+				$sql = ' select * from commandes 
 						where 
 						titre_commande like "%%%s%%" 
 						and date_commande>="%s" and date_commande<="%s" order by %s limit %d , 5 ';	

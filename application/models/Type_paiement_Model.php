@@ -12,6 +12,16 @@ class Type_paiement_Model extends CI_MODEL
 		return $type_paiements;
 	}
 
+	function find_all_type_paiement_active_with_pagination( $page )
+	{
+		$start = ( $page - 1 ) * 5; 
+		$sql = " select * from type_paiement where active = 1 order by id_type_paiement desc limit %d , 5 ";
+		$sql = sprintf( $sql , $start );
+		$query = $this->db->query($sql);
+		$type_paiements = $query->result_array();
+		return $type_paiements;
+	}
+
 	function find_all_type_paiement()
 	{
 		$query = $this->db->query(' select * from type_paiement order by id_type_paiement desc');
