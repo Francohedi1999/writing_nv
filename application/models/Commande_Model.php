@@ -3,92 +3,126 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Commande_Model extends CI_MODEL
 {
-// -----------------------------------------------------------------------TABLE COMMANDE--------------------------------------------------------------------------------
-	function insert_commande($id_tarif,
-								$id_langue_text,
-								$nb_mot,
-								$mot_cle,
-								$titre_commande,
-								$remarque,
-								$nom_user,
-								$nom_entreprise,
-								$adresse,
-								$nom_pays,
-								$ville,
-								$region,
-								$code_postal,
-								$num_TVA,
-								$code_promo,
-								$reduction_promo,
-								$reduction_fidelite,
-								$prix_prestation,
-								$id_type_paiement,
-								$id_user,
-								$fidele)
-	{
-		
+// -----------------------------------------------------------------------TABLE COMMANDE-------------------------------------------------------------------
+		function insert_commande( 	$id_tarif,
+									$id_user,
+									$fidele,
+									$reduction_fidelite,
+									$nom_user,
+									$mail_user,
+									$nom_entreprise,
+									$num_eng_fiscal,
+									$id_langue_text,
+									$cible,
+									$ton,
+									$titre,
+									$intertitres,
+									$nb_mots_paragraphe,
+									$mot_cle_1,
+									$mot_cle_2,
+									$mise_en_forme,
+									$meta_titre,
+									$meta_desc,
+									$balise,
+									$remarques,
+									$code_promo,
+									$reduction_promo,
+									$id_type_paiement,
+									$prix_prestation )
+		{
+			if( $fidele == 1 )
+			{
+				$remise_total = $reduction_promo + $reduction_fidelite;
+				$reduction_total = $prix_prestation * ( $remise_total / 100 );
+				$prix_prestation_final = $prix_prestation - $reduction_total;
+			}
+			elseif( $fidele == 0 )
+			{
+				$reduction_fidelite = 0;
+				$remise_total = $reduction_promo + $reduction_fidelite;
+				$reduction_total = $prix_prestation * ( $remise_total / 100 );
+				$prix_prestation_final = $prix_prestation - $reduction_total;
+			}
 
-		if( $fidele == 1 )
-		{
-			$remise_total = $reduction_promo + $reduction_fidelite;
-			$reduction_total = $prix_prestation * ( $remise_total / 100 );
-			$prix_prestation_final = $prix_prestation - $reduction_total;
+			$sql = " insert into commande(id_tarif,
+									id_user,
+									fidele,
+									reduction_fidelite,
+									nom_user,
+									mail_user,
+									nom_entreprise,
+									num_eng_fiscal,
+									id_langue_text,
+									cible,
+									ton,
+									titre,
+									intertitres,
+									nb_mots_paragraphe,
+									mot_cle_1,
+									mot_cle_2,
+									mise_en_forme,
+									meta_titre,
+									meta_desc,
+									balise,
+									remarques,
+									code_promo,
+									reduction_promo,
+									id_type_paiement,
+									prix_prestation,
+									date_commande ) values(	%d,
+																%d,
+																%d,
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																%d,
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																%d,
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																'%s',
+																current_date )";
+			$sql = sprintf( $sql,
+							$id_tarif,
+							$id_user,
+							$fidele,
+							$reduction_fidelite,
+							str_replace( "'" , "''" , $nom_user ),
+							str_replace( "'" , "''" , $mail_user ),
+							str_replace( "'" , "''" , $nom_entreprise ),
+							str_replace( "'" , "''" , $num_eng_fiscal ),
+							$id_langue_text,
+							str_replace( "'" , "''" , $cible ),
+							str_replace( "'" , "''" , $ton ),
+							str_replace( "'" , "''" , $titre ),
+							str_replace( "'" , "''" , $intertitres ),
+							$nb_mots_paragraphe,
+							str_replace( "'" , "''" , $mot_cle_1 ),
+							str_replace( "'" , "''" , $mot_cle_2 ),
+							str_replace( "'" , "''" , $mise_en_forme ),
+							str_replace( "'" , "''" , $meta_titre ),
+							str_replace( "'" , "''" , $meta_desc ),
+							str_replace( "'" , "''" , $balise ),
+							str_replace( "'" , "''" , $remarques ),
+							$code_promo,
+							$reduction_promo,
+							$id_type_paiement,
+							$prix_prestation_final );
+			$this->db->query($sql);
 		}
-		elseif( $fidele == 0 )
-		{
-			$reduction_fidelite = 0;
-			$remise_total = $reduction_promo + $reduction_fidelite;
-			$reduction_total = $prix_prestation * ( $remise_total / 100 );
-			$prix_prestation_final = $prix_prestation - $reduction_total;
-		}
-		$sql = " insert into commande(
-					id_tarif,
-					id_langue_text,
-					nb_mot,
-					mot_cle,
-					titre_commande,
-					remarque,
-					nom_user,
-					nom_entreprise,
-					adresse,
-					nom_pays,
-					ville,
-					region,
-					code_postal,
-					num_TVA,
-					code_promo,
-					reduction_promo,
-					reduction_fidelite,
-					prix_prestation,
-					id_type_paiement,
-					id_user,
-					fidele,
-					date_commande) 
-					values( 
-					%d , %d , %d , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , '%s' , %d , %d , current_date ) ";
-		$sql = sprintf($sql ,$id_tarif,
-								$id_langue_text,
-								$nb_mot,
-								str_replace( "'" , "''" , $mot_cle),
-								str_replace( "'" , "''" , $titre_commande ),
-								str_replace( "'" , "''" , $remarque ),
-								str_replace( "'" , "''" , $nom_user ),
-								str_replace( "'" , "''" , $nom_entreprise ),
-								str_replace( "'" , "''" , $adresse ),
-								str_replace( "'" , "''" , $nom_pays ),
-								str_replace( "'" , "''" , $ville ),
-								str_replace( "'" , "''" , $region ),
-								str_replace( "'" , "''" , $code_postal ),
-								str_replace( "'" , "''" , $num_TVA ),
-								str_replace( "'" , "''" , $code_promo ),
-								$reduction_promo,
-								$reduction_fidelite,
-								$prix_prestation_final,
-								$id_type_paiement,
-								$id_user,
-								$fidele
-								);
-		$this->db->query($sql);
 	}
 
 	function cancel_commande( $id_commande )
@@ -222,13 +256,6 @@ class Commande_Model extends CI_MODEL
 	}
 
 
-	function update_commande_to_uneditable($id_commande)
-	{
-		$sql = 'update commande set modifiable = false where id_commande = %d';
-		$sql = sprintf($sql , $id_commande);
-		$this->db->query($sql);
-	}
-
 
 	function find_all_commandes( )
 	{
@@ -262,87 +289,6 @@ class Commande_Model extends CI_MODEL
 		$sql = sprintf($sql , $id_commande);
 		$query = $this->db->query( $sql );
 		$commandes = $query->row_array();
-		return $commandes;
-	}
-
-
-	// row = 5
-
-	// page = 1
-	// start = (1-1) * 5 = 0
-	//  select id_commande , mot_cle from commande limit 0 , 5;
-
-	// page = 2
-	// start = (2-1) * 5 = 5
-	// 	select id_commande , mot_cle from commande limit 5 , 5;
-
-	// ---------------- COMMANDE PAR CLIENT --------------------- //
-	 
-
-	function find_all_commandes_by_id_user_with_pagination( $id_user , $titre_commande , $date_commande_1 , $date_commande_2 , $page , $filtre , $ordre )
-	{	
-		$start = ( $page - 1 ) * 5; 
-
-		if( $filtre == "" )
-		{
-			$filtre = 'id_commande desc';
-			if( $date_commande_1 == "" && $date_commande_2  == "" )
-			{
-				$sql = " select * from commandes where id_user = %d and modifiable = 0 and titre_commande like '%%%s%%' order by %s limit %d , 5 ";	
-				$sql = sprintf( $sql , $id_user , str_replace( "'" , "''" , $titre_commande) , $filtre , $start );
-			}
-			elseif( $date_commande_1 != "" && $date_commande_2  == "" )
-			{
-				$sql = ' select * from commandes 
-						where 
-						id_user = %d and 
-						titre_commande like "%%%s%%" 
-						and date_commande>="%s" order by %s limit %d , 5 ';	
-				$sql = sprintf( $sql , $id_user , str_replace( "'" , "''" , $titre_commande) , $date_commande_1 , $filtre , $start );
-			}
-			else
-			{
-				$sql = ' select * from commandes 
-						where 
-						id_user = %d and 
-						titre_commande like "%%%s%%" 
-						and date_commande>="%s" and date_commande<="%s" order by %s limit %d , 5 ';	
-				$sql = sprintf( $sql , $id_user , str_replace( "'" , "''" , $titre_commande) , $date_commande_1 , $date_commande_2 , $filtre , $start );
-			}
-		}
-		else
-		{
-			$filtre = $filtre." ".$ordre ;
-			if( $date_commande_1 == "" && $date_commande_2 == "" )
-			{
-				$sql = ' select * from commandes 
-						where 
-						id_user = %d and 
-						titre_commande like "%%%s%%" order by %s limit %d , 5 ';	
-				$sql = sprintf( $sql , $id_user , str_replace( "'" , "''" , $titre_commande) , $filtre , $start );
-			}
-			elseif( $date_commande_1 != "" && $date_commande_2  == "" )
-			{
-				$sql = ' select * from commandes 
-						where 
-						id_user = %d and 
-						titre_commande like "%%%s%%" 
-						and date_commande>="%s" order by %s limit %d , 5 ';	
-				$sql = sprintf( $sql , $id_user , str_replace( "'" , "''" , $titre_commande) , $date_commande_1 , $filtre , $start );
-			}
-			else
-			{
-				$sql = ' select * from commandes 
-						where 
-						id_user = %d and 
-						titre_commande like "%%%s%%" 
-						and date_commande>="%s" and date_commande<="%s" order by %s limit %d , 5 ';	
-				$sql = sprintf( $sql , $id_user , str_replace( "'" , "''" , $titre_commande) , $date_commande_1 , $date_commande_2 , $filtre , $start );
-			}
-		}
-		// echo $sql;
-		$query = $this->db->query($sql);
-		$commandes = $query->result_array();
 		return $commandes;
 	}
 
@@ -559,5 +505,4 @@ class Commande_Model extends CI_MODEL
 		$commandes = $query->row_array();
 		return $commandes;
 	}
-}
 ?>

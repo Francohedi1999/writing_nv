@@ -132,6 +132,9 @@ create table user
 )engine = InnoDB
 Default charset = 'UTf8';
 
+-- ____________________________________________________________CLIENT___________________________________________________________________________________________
+
+
 create or replace view users_client as
 select
 	user.id_user as id_user,
@@ -171,6 +174,8 @@ select
 	from user 
 	join user_type on user.id_user_type = user_type.id_user_type
 	join pays on user.id_pays = pays.id_pays  where user_type.id_user_type = 2;
+
+-- ____________________________________________________________REDACTEUR___________________________________________________________________________________________
 
 create or replace view users_redacteur as
 select
@@ -369,6 +374,58 @@ create table commande
 	)engine = InnoDB
 Default charset = 'UTf8';
 
+create or replace view commandes as
+select 
+
+commande.id_commande as id_commande,
+commande.id_user as id_user,
+commande.fidele as fidele,
+commande.reduction_fidelite as reduction_fidelite,
+commande.nom_user as nom_user,
+commande.mail_user as mail_user,
+commande.nom_entreprise as nom_entreprise,
+commande.num_eng_fiscal as num_eng_fiscal,
+commande.cible as cible,
+commande.ton as ton,
+commande.titre as titre,
+commande.intertitres as intertitres,
+commande.nb_mots_paragraphe as nb_mots_paragraphe,
+commande.mot_cle_1 as mot_cle_1,
+commande.mot_cle_2 as mot_cle_2,
+commande.mise_en_forme as mise_en_forme,
+commande.meta_titre as meta_titre,
+commande.meta_desc as meta_desc,
+commande.balise as balise,
+commande.remarques as remarques,
+commande.code_promo as code_promo,
+commande.reduction_promo as reduction_promo,
+commande.modifiable as modifiable,
+commande.date_commande as date_commande,
+commande.date_commencement as date_commencement,
+commande.date_livraison as date_livraison,
+commande.prix_prestation as prix_prestation,
+
+commande.id_redacteur as id_redacteur,
+
+tarifs.id_tarif as id_tarif,
+tarifs.type_text as type_text,
+tarifs.prix_par_mot as prix_par_mot,
+tarifs.type_redacteur as type_redacteur,
+
+langue_text.id_langue_text as id_langue_text,
+langue_text.langue_text as langue_text,
+
+type_paiement.id_type_paiement as id_type_paiement,
+type_paiement.type_paiement as type_paiement,
+
+etat_commande.id_etat_commande as id_etat_commande,
+etat_commande.etat_commande as etat_commande
+
+from commande
+join tarifs on tarifs.id_tarif = commande.id_tarif
+join langue_text on langue_text.id_langue_text = commande.id_langue_text
+join etat_commande on etat_commande.id_etat_commande = commande.id_etat_commande
+join type_paiement on type_paiement.id_type_paiement = commande.id_type_paiement;
 _______________________________________________________________________________________________________________________________________________________________________
 
 create table facture
@@ -384,6 +441,28 @@ create table facture
 	)engine = InnoDB
 Default charset = 'UTf8';
 
+
+create or replace view factures as 
+select 
+
+facture.id_facture as id_facture,
+facture.date_facturation as date_facturation,
+facture.date_livraison as date_livraison,
+facture.payee as payee,
+facture.id_user as id_user,
+
+case 
+	when payee = 0 then "Non payée"
+	else "Payée"
+	end as etat_facture, 
+
+commandes.id_commande as id_commande,
+commandes.prix_prestation as prix_prestation,
+commandes.id_type_paiement as id_type_paiement,
+commandes.type_paiement as type_paiement
+
+from facture 
+join commandes on commandes.id_commande = facture.id_commande;
 _______________________________________________________________________________________________________________________________________________________________________
 
 create table commentaire
@@ -402,3 +481,8 @@ Default charset = 'UTf8';
 _______________________________________________________________________________________________________________________________________________________________________
 -- insert into user(nom_user , mail_user , mdp_user , id_user_type ) values('Writing is Bae' , 'writingisbae7@gmail.com' , sha1('Writingisbaefoana*7') , 1 );
 
+create or replace view nb_client as
+select
+id_user_type , fidele , count(id_user) as nb_user from user group by fidele, id_user_type  order by fidele desc;
+
+_______________________________________________________________________________________________________________________________________________________________________

@@ -39,7 +39,7 @@
 						    <div class="input-group form-group col-md-8">
 						    	Recherche
 							    <div class="input-group">     
-							      	<input type="text" class="form-control" name="titre_commande" id="titre_commande" placeholder="Titre" aria-label="Titre" aria-describedby="basic-addon1">
+							      	<input type="text" class="form-control" name="titre" id="titre" placeholder="Titre" aria-label="Titre" aria-describedby="basic-addon1">
 							     	<button class="btn btn-outline-light pl-2 pr-2"><i class="fa fa-search" style="color:black;"></i></button>
 							    </div>
 						    </div>
@@ -110,7 +110,7 @@
 						    <?php for($i=0 ; $i<count($commandes) ; $i++) {?>
 						    <tr>
 						    	<th><?php echo $commandes[$i]['id_commande'] ;?></th>	
-    						    <td><?php echo $commandes[$i]['titre_commande'] ;?></td>
+    						    <td><?php echo $commandes[$i]['titre'] ;?></td>
 						        <td><?php echo $commandes[$i]['date_commande'] ;?></td>
 						        <td><?php echo $commandes[$i]['date_commencement'] ;?></td>
 						        <td><?php echo $commandes[$i]['date_livraison'] ;?></td>

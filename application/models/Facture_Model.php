@@ -47,10 +47,10 @@ class Facture_Model extends CI_MODEL
 	}
 
 
-	// ---------------------------------------------------------------------- VIEW DETAILS_FACTURE ------------------------------------------------------------------------
+	// ---------------------------------------------------------------------- VIEW FACTURES ------------------------------------------------------------------------
 	function find_all_factures()
 	{
-		$query = $this->db->query(' select * from details_facture ');
+		$query = $this->db->query(' select * from factures ');
 		$factures = $query->result_array();
 		return $factures;
 	}
@@ -61,12 +61,12 @@ class Facture_Model extends CI_MODEL
 		if( $filtre == "" )
 		{
 			$filtre = "id_facture desc ";
-			$sql = ' select * from details_facture where id_user = %d order by %s limit %d , 5 ';
+			$sql = ' select * from factures where id_user = %d order by %s limit %d , 5 ';
 		}
 		elseif( $filtre != "" )
 		{
 			$filtre = $filtre." ".$ordre;
-			$sql = ' select * from details_facture where id_user = %d order by %s limit %d , 5 ';
+			$sql = ' select * from factures where id_user = %d order by %s limit %d , 5 ';
 		}		
 		$sql = sprintf($sql , $id_user , $filtre , $start);
 		$query = $this->db->query( $sql );
@@ -81,12 +81,12 @@ class Facture_Model extends CI_MODEL
 		if( $filtre == "" )
 		{
 			$filtre = "id_facture desc ";
-			$sql = ' select * from details_facture order by %s limit %d , 5 ';
+			$sql = ' select * from factures order by %s limit %d , 5 ';
 		}
 		elseif( $filtre != "" )
 		{
 			$filtre = $filtre." ".$ordre;
-			$sql = ' select * from details_facture order by %s limit %d , 5 ';
+			$sql = ' select * from factures order by %s limit %d , 5 ';
 		}		
 		$sql = sprintf($sql , $filtre , $start);
 		$query = $this->db->query( $sql );
@@ -97,7 +97,7 @@ class Facture_Model extends CI_MODEL
 
 	function find_facture_by_id_facture($id_facture)
 	{
-		$sql = ' select * from details_facture where id_facture = %d ';
+		$sql = ' select * from factures where id_facture = %d ';
 		$sql = sprintf($sql , $id_facture);
 		$query = $this->db->query( $sql );
 		$factures = $query->row_array();
@@ -106,7 +106,7 @@ class Facture_Model extends CI_MODEL
 
 	function find_facture_by_id_commande($id_commande)
 	{
-		$sql = ' select * from details_facture where id_commande = %d ';
+		$sql = ' select * from factures where id_commande = %d ';
 		$sql = sprintf($sql , $id_commande);
 		$query = $this->db->query( $sql );
 		$factures = $query->row_array();

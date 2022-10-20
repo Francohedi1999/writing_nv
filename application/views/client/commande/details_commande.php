@@ -30,50 +30,74 @@
 					</legend>
 					<hr>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-8">
 							<dl class="row">
-					  			<dt class="col-sm-6">Type de rédacteur</dt>
-					  			<dd class="col-sm-6"><?php echo $details_commande['type_redacteur'];?></dd>
 
-						  		<dt class="col-sm-6">Type de texte</dt>
-						  		<dd class="col-sm-6"><?php echo $details_commande['type_text'];?></dd>
+								<dt class="col-sm-4">Langue</dt>
+					  			<dd class="col-sm-8"><?php echo $details_commande['langue_text'];?></dd>
 
-						  		<dt class="col-sm-6">Langue</dt>
-					  			<dd class="col-sm-6"><?php echo $details_commande['langue_text'];?></dd>
+					  			<dt class="col-sm-4">Type de texte et rédacteur</dt>
+						  		<dd class="col-sm-8"><?php echo $details_commande['type_text']."<br>( ".$details_commande['type_redacteur']." )";?></dd>
 
-					  			<dt class="col-sm-6">Titre</dt>
-					  			<dd class="col-sm-6"><?php echo $details_commande['titre_commande'];?></dd>
+					  			<dt class="col-sm-4">Cible</dt>
+					  			<dd class="col-sm-8"><?php echo $details_commande['cible'];?></dd>						  		
 
-					  			<dt class="col-sm-6">Mot clé</dt>
-					  			<dd class="col-sm-6"><pre><?php echo $details_commande['mot_cle'];?></pre></dd>
+						  		<dt class="col-sm-4">Ton</dt>
+						  		<dd class="col-sm-8"><?php echo $details_commande['ton'];?></dd>
 
-					  			<dt class="col-sm-6">Remarque (Instruction)</dt>
-					  			<dd class="col-sm-6"><pre><?php echo $details_commande['remarque'];?></pre></dd>
+					  			<dt class="col-sm-4">Stuctures</dt>
+					  			<dd class="col-sm-8">
+								    <dl class="row">
+								      	<dt class="col-sm-4">Titre</dt>
+								      	<dd class="col-sm-8"><?php echo $details_commande['titre'];?></dd>
+								    </dl>
+								    <dl class="row">
+								      	<dt class="col-sm-4">Inertitre</dt>
+								      	<dd class="col-sm-8"><?php echo $details_commande['intertitres'];?></dd>
+								    </dl>
+								    <dl class="row">
+								      	<dt class="col-sm-4">Nombre de mots</dt>
+								      	<dd class="col-sm-8"><?php echo $details_commande['nb_mots_paragraphe'] ;?></dd>
+								    </dl>
+								 </dd>
+
+					  			<dt class="col-sm-4">Mot-clé primaire</dt>
+					  			<dd class="col-sm-8"><?php echo $details_commande['mot_cle_1'];?></dd>
+
+					  			<dt class="col-sm-4">Mot-clés secondaires</dt>
+					  			<dd class="col-sm-8"><?php echo $details_commande['mot_cle_2'];?></dd>
+
+								<dt class="col-sm-4">Mise en forme de l'article</dt>
+					  			<dd class="col-sm-8"><?php echo $details_commande['mise_en_forme'];?></dd>	
+
+					  			<dt class="col-sm-4">Méta-titre</dt>
+					  			<dd class="col-sm-8"><?php echo $details_commande['meta_titre'];?></dd>	
+
+					  			<dt class="col-sm-4">Méta-description</dt>
+					  			<dd class="col-sm-8"><?php echo $details_commande['meta_desc'];?></dd>	
+
+					  			<dt class="col-sm-4">Balises</dt>
+					  			<dd class="col-sm-8"><?php echo $details_commande['balise'];?></dd>			
+					  					  			
+							</dl>
+						</div>
+						<div class="vl col-md-4">
+							<dl class="row">
 
 					  			<dt class="col-sm-6">Code Promo</dt>
 					  			<dd class="col-sm-6"><?php echo $details_commande['code_promo'] ;?></dd>
-							</dl>
-						</div>
-						<div class="vl col-md-6">
-							<dl class="row">
-								<dt class="col-sm-6">Nombre de mot</dt>
-					  			<dd class="col-sm-6"><?php echo $details_commande['nb_mot'] ;?></dd>
 
 					  			<dt class="col-sm-6">Prix par mot</dt>
 					  			<dd class="col-sm-6"><?php echo round($details_commande['prix_par_mot'] , 2)." Ar" ;?></dd>
 
 								<dt class="col-sm-6">Prix prestation</dt>
-					  			<dd class="col-sm-6"><?php echo round( $details_commande['nb_mot'] * $tarif['prix_par_mot'] , 2 )." Ar" ;?></dd>					  			
+					  			<dd class="col-sm-6"><?php echo round( $details_commande['nb_mots_paragraphe'] * $tarif['prix_par_mot'] , 2 )." Ar" ;?></dd>					  			
 
 					  			<dt class="col-sm-6">Réduction par Code Promo</dt>
 					  			<dd class="col-sm-6"><?php echo "-".round( $details_commande['reduction_promo'] , 2)."%" ;?></dd>
 
 					  			<dt class="col-sm-6">Réduction par fidélité</dt>
-					  			<?php if( $details_commande['fidele'] == 1 ) { ?>
-					  				<dd class="col-sm-6"><?php echo "-".round( $details_commande['reduction_fidelite'] , 2)."%" ;?></dd>					  			
-					  			<?php } elseif( $details_commande['fidele'] == 0 ) { ?>
-					  				<dd class="col-sm-6"><?php echo "-".round( 0 , 2)."%" ;?></dd>
-					  			<?php } ?>
+					  			<dd class="col-sm-6"><?php echo "-".round( $details_commande['reduction_fidelite'] , 2)."%" ;?></dd>
 
 								<dt class="col-sm-6">Réduction total</dt>
 					  			<dd class="col-sm-6"><?php echo "-".round( $details_commande['reduction_promo'] + $details_commande['reduction_fidelite'] , 2)."%" ;?></dd>
